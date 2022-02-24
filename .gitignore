@@ -45,7 +45,4 @@ yarn.lock
 # Assets
 
 # backup 
-mysqlbackup/*
 
-public/model-profiles/*
-public/user-profiles/*

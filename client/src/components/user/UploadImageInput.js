@@ -13,9 +13,7 @@ export default function UploadImageInput({ value, label, onChange, name, md }) {
     setFile(e.target.files[0]);
     onChange(e);
   }
-  console.log(value, blobUrl, file);
 
-  console.log(typeof file);
 
   useEffect(() => {
     if (file !== null) {

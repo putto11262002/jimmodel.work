@@ -9,7 +9,7 @@ export default function RequestedModelCard({ data }) {
   async function approveModel(){
     try{
       const updatedModel = await modelActions.updateModel(data.model_id, {...data, approved: true});
-      console.log(updatedModel)
+    
     }catch(err){
       console.error(err)
     }

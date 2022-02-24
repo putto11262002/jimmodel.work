@@ -224,13 +224,13 @@ export default function ModelContextProvider({ children }) {
       data.Measurement = JSON.stringify(data.Measurement);
       const res = await modelService.update(model_id, formData);
       const updatedModel = await res.data;
-      console.log(updatedModel);
+    
       const modelTargetIndex = getModelIndex(model_id, models);
       const requestedModelTargetIndex = getModelIndex(
         model_id,
         requestedModels
       );
-      console.log(modelTargetIndex, requestedModelTargetIndex);
+     
       if (updatedModel.approved) {
         if (requestedModelTargetIndex !== -1) {
           setRequestedModels((prevRequestedModels) => {

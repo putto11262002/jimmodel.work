@@ -53,7 +53,7 @@ export default function UserContextProvider({ children }) {
   }
 
   function getUser(user_id) {
-    console.log(users);
+  
     for (let user of users) {
       if (user.user_id === user_id) {
         return Promise.resolve(user);

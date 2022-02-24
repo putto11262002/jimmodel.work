@@ -68,7 +68,7 @@ export default function SessionContextProvider({children}){
             setLoading(true);
             const res = await authService.logout();
             const data = await res.data;
-            console.log(data)
+          
             setLoginStatus(false);
             setUser(null);
             alertActions.setShow('You are logged out.', 'danger');

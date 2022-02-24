@@ -131,7 +131,7 @@ export default  function JobContextProvider({ children }) {
         if(optionTargetIndex !== -1){
           setOptions(prevOptions =>  {
             const newOptions = prevOptions.filter(option => option.job_id !== job_id);
-            console.log(newOptions)
+           
             return newOptions
           })
         }
