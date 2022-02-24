@@ -2,9 +2,6 @@ upstream server {
   server server:3001;
 }
 
-upstream client {
-  server client:3000;
-}
 
 
 server {
@@ -12,9 +9,12 @@ server {
         listen [::]:${WEBSERVER_HTTP_PORT};
         server_name ${DOMAIN_NAME} www.${DOMAIN_NAME};
         client_max_body_size 1000M;
-        location / {
-             proxy_pass http://client;
-         }
+        root /var/www/html;
+        index index.html index.htm index.nginx-debian.html;
+
+         location / {
+        try_files $uri /index.html;
+       }
         location /api {
           rewrite /api/(.*) /$1 break;
            proxy_pass http://server;

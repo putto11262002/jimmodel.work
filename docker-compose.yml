@@ -58,7 +58,8 @@ services:
     restart: unless-stopped
     volumes:
       - ./client/src:/usr/app/src/
-    command: 'npm run start'
+      - client_build:/usr/app/build/
+    # command: 'npm run build'
     
     depends_on:
       - server
@@ -81,7 +82,7 @@ services:
       - $WEBSERVER_HTTP_PORT:$WEBSERVER_HTTP_PORT
      
     volumes:
-      # - appjimmodel_build:/var/www/html/
+      - client_build:/var/www/html/
       - ./nginx-conf:/etc/nginx/templates/
       # - certbot-etc:/etc/letsencrypt
       # - certbot-var:/var/lib/letsencrypt
@@ -106,7 +107,7 @@ volumes:
       type: none
       device: $PUBLIC_ASSET_STORAGE_PATH
       o: bind
-  appjimmodel_build:
+  client_build:
   certbot-etc:
   certbot-var:
   dhparam:
