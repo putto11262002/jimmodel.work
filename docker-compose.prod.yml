@@ -89,22 +89,36 @@ services:
     restart: unless-stopped
     ports:
       - $WEBSERVER_HTTP_PORT:$WEBSERVER_HTTP_PORT
+      - $WEBSERVER_HTTPS_PORT:$WEBSERVER_HTTPS_PORT
      
     volumes:
       - jimmodelwork_client_build:/var/www/html/
-      - ./nginx-conf/prod/:/etc/nginx/templates/
-      # - certbot-etc:/etc/letsencrypt
-      # - certbot-var:/var/lib/letsencrypt
-      # - dhparam:/etc/ssl/certs
+      - ./nginx-conf/prod/https:/etc/nginx/templates/
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - dhparam:/etc/ssl/certs
     env_file: ./.env
     environment:
       - DOMAIN_NAME:$DOMAIN_NAME
       - WEBSERVER_HTTP_PORT:$WEBSERVER_HTTP_PORT
+      - WEBSERVER_HTTPS_PORT:$WEBSERVER_HTTPS_PORT
     depends_on:
       - server
      
     networks:
       - frontend
+   
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - jimmodelwork_client_build:/var/www/html
+    depends_on:
+      - webserver
+    command: certonly --webroot --webroot-path=/var/www/html --email $EMAIL --agree-tos --no-eff-email --force-renewal -d $DOMAIN_NAME  -d www.$DOMAIN_NAME 
+
   
 
 volumes: 

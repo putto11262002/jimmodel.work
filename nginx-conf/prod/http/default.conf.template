@@ -9,9 +9,12 @@ upstream server {
 server {
         listen ${WEBSERVER_HTTP_PORT};
         listen [::]:${WEBSERVER_HTTP_PORT};
+
         server_name ${DOMAIN_NAME} www.${DOMAIN_NAME};
+
         client_max_body_size 1000M;
-         root /var/www/html;
+
+        root /var/www/html;
         index index.html index.htm index.nginx-debian.html;
 
          location / {
@@ -23,7 +26,15 @@ server {
            proxy_pass http://server;
                 
         }
+
+        location ~ /.well-known/acme-challenge {
+                allow all;
+                root /var/www/html;
+        }
+       
+       
        
         
   
 }
+
