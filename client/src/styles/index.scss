@@ -1,0 +1,81 @@
+@import "bootstrap/scss/functions"; 
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+
+
+.custom-modal{
+    z-index: 10;
+}
+
+.custom-blackdrop{
+    z-index: 8;
+}
+
+.card-model-profile-img {
+    height: 20rem;
+    object-fit: cover;
+}
+
+
+.calender-container{
+    height: calc(100vh - 4rem);
+    width: 100%;
+
+}
+
+.day-label{
+    width: calc(100vw /7);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;}
+
+
+
+.fs-sm{
+    font-size: $font-size-base*0.75;
+}
+
+.text-overflow-ellipsis{
+    text-overflow: ellipsis;
+
+}
+
+.outline-none:focus {
+    outline: none !important;
+  }
+
+  .outline-none{
+      outline: none;
+  }
+
+ 
+.bg-block-model{
+    background: red;
+}
+
+.dropdown-toggle::after {
+    content: none;
+}
+
+.bg-fitting{
+    background: #f346ab;
+}
+
+.bg-job{
+    background: $dark;
+}
+
+.bg-rehearsal{
+    background: #f346ab;
+
+}
+
+.bg-final-meeting{
+    background: rgb(0, 229, 255);
+}
+
+:focus:not(:focus-visible) {
+    outline: 0;
+    box-shadow: none;
+  }

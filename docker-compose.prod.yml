@@ -1,0 +1,145 @@
+version: '3.3'
+
+
+services:
+  mysqldb:
+    container_name: jimmodel.work_mysqldb
+    image: mysql:5.7
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$DB_PASSWORD
+      - MYSQL_DATABASE=$DB_NAME
+    ports:
+      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+    volumes:
+      - jimmodelwork_db:/var/lib/mysql
+    networks:
+      - backend
+  mysqldbbackup:
+    container_name: jimmodel.work_mysqldb_backup
+    image: databack/mysql-backup
+    restart: always
+    volumes:
+     - mysqldb_backup:/backup
+    environment:
+     - DB_DUMP_TARGET=/backup
+     - DB_USER=$DB_USER
+     - DB_PASS=$DB_PASSWORD
+     - DB_DUMP_FREQ=60
+     - DB_SERVER=mysqldb
+    networks:
+      - backend
+    depends_on:
+      - mysqldb
+   
+  server:
+    container_name: jimmodel.work_server
+    depends_on:
+      - mysqldb
+    build: 
+      context: ./server
+      target: prod
+    restart: unless-stopped
+    command:  'npm run start'
+    env_file: ./.env
+    stdin_open: true
+    tty: true
+    volumes:
+      - jimmodelwork_public:/usr/app/public/
+
+    expose:
+      - $SERVER_PORT
+ 
+    networks:
+      - backend
+      - frontend
+  client:
+    container_name: jimmodel.work_client
+    build:
+      
+      context: ./client
+      target: prod
+
+      args:
+        - REACT_APP_API_END_POINT=$REACT_APP_API_END_POINT
+    # restart: unless-stopped
+    volumes:
+      - jimmodelwork_client_build:/usr/app/build
+
+    # command: 'npm run build'
+    
+    depends_on:
+      - server
+    networks:
+      - frontend
+
+  
+  # publicDirSetUp:
+  #   image: ubuntu
+  #   volumes: 
+  #     - jimmodelwork_public:/public
+  #   command: "bash -c 'cd public && mkdir -p model-profiles && mkdir -p user-profiles && ls'"
+    
+ 
+    
+  webserver:
+    container_name: jimmodel.work_webserver
+    image: nginx
+    restart: unless-stopped
+    ports:
+      - $WEBSERVER_HTTP_PORT:$WEBSERVER_HTTP_PORT
+     
+    volumes:
+      - jimmodelwork_client_build:/var/www/html/
+      - ./nginx-conf/prod/:/etc/nginx/templates/
+      # - certbot-etc:/etc/letsencrypt
+      # - certbot-var:/var/lib/letsencrypt
+      # - dhparam:/etc/ssl/certs
+    env_file: ./.env
+    environment:
+      - DOMAIN_NAME:$DOMAIN_NAME
+      - WEBSERVER_HTTP_PORT:$WEBSERVER_HTTP_PORT
+    depends_on:
+      - server
+     
+    networks:
+      - frontend
+  
+
+volumes: 
+  jimmodelwork_client_build:
+
+  jimmodelwork_db:
+    driver: local
+    driver_opts:
+      type: none
+      device: $MYSQL_STORAGE_PATH
+      o: bind
+    
+  jimmodelwork_public:
+    driver: local
+    driver_opts:
+      type: none
+      device: $PUBLIC_ASSET_STORAGE_PATH
+      o: bind
+  
+  certbot-etc:
+  certbot-var:
+  dhparam:
+    driver: local
+    driver_opts:
+      type: none
+      device: $DHPARAM_FILE_PATH
+      o: bind
+  mysqldb_backup:
+    driver: local
+    driver_opts:
+      type: none
+      device: $MYSQL_BACKUP_PATH
+      o: bind
+networks:
+  backend:
+  frontend:
+
+
