@@ -12,6 +12,8 @@ export default function OptionCard({data}) {
   const {jobActions} = useJobContext()
   async function handleDeleteOption(){
     try{
+      const confirm = window.confirm("Are you sure you want to confirm this option?")
+      if(!confirm) return;
       await jobActions.deleteOption(data.job_id);
     }catch(err){
       console.error(err)
@@ -21,6 +23,8 @@ export default function OptionCard({data}) {
 
   async function confirmOption(){
     try{
+      const confirm = window.confirm("Are you sure you want to confirm this option?")
+     if(!confirm) return;
       const updatedOption = await jobActions.updateOption(data.job_id, {...data, status: true, JobDates: data.JobDates.map(jobDate => {
         return {...jobDate, date: new Date(jobDate.date)}
       }), Models: data.Models.map(model => model.model_id)})

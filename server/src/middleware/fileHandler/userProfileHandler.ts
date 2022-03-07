@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import fs from "fs";
 const fsPromises = fs.promises;
 import userService from "../../service/user/index.service";
+import { DEFAULT_USER_PROFILE_IMAGE } from "../../utils/constants";
 import log from "../../utils/logging/logger";
 
 export default (req: Request, res: Response, next: NextFunction) => {
@@ -48,7 +49,7 @@ export const deleteUserProfile = async (
   }
 
 
-    if (!user.profile_img) {
+    if (user.profile_img !== null && user.profile_img !== DEFAULT_USER_PROFILE_IMAGE) {
       try {
         await fsPromises.unlink(user.profile_img);
       } catch (err) {

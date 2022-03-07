@@ -61,7 +61,7 @@ export default function SearchJob() {
         type="text"
         placeholder="search job/option..."
       />
-      <ListGroup className="position-absolute w-100">
+      <ListGroup className="position-absolute w-100 shadow" style={{zIndex: 10}}>
         {searchResults.map((job, index) => {
          if(job.status){
            return <JobListGroupItem data={job} key={index} />

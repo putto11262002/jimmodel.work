@@ -68,7 +68,7 @@ export default function TalentInput({
     addModel(newModel);
   }
 
-  console.log(models)
+
 
   const { searchResults, loading, error } = useSearchModel(searchTerm, date);
  

@@ -74,9 +74,9 @@ export default function BlockModelModal() {
 <DateInput
             value={inputData.JobDates}
             onChange={(newJobDates) =>
-              handleDateInputChange(newJobDates, "final_meeting_date")
+              handleDateInputChange(newJobDates)
             }
-            label="Final meeting date"
+            label="Block model date"
             md="12"
           />
 

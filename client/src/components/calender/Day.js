@@ -40,10 +40,10 @@ export default function Day({ data }) {
 
       
         try {
-          const fetchedJob = (await job.status)
-            ? jobActions.getJob(job.job_id)
-            : jobActions.getOption(job.job_id);
-          tempJobs.push({ ...fetchedJob, type: job.type,  DuplicatedModels: job.DuplicatedModels});
+          const fetchedJob = job.status
+            ? await jobActions.getJob(job.job_id)
+            : await  jobActions.getOption(job.job_id);
+          tempJobs.push({ ...fetchedJob, type: job.type,  Models: job.Models.sort((model1, model2) => model1.duplicated === model2.duplicated ? 0 : model1.duplicated ? -1 : 1)});
         } catch (err) {
           console.error(err);
         }
@@ -57,8 +57,17 @@ export default function Day({ data }) {
 
         return    job1createdDate.getTime() - job2createdDate.getTime()
       });
+
       tempJobs.sort((job1, job2) => {
-        return job1.type === job2.type ? 0 : job1.type === "option" ? -1 : 1;
+        return job1.type === job2.type ? 0 : job1.type === "rehearsal" ? -1 : 1;
+      });
+
+      tempJobs.sort((job1, job2) => {
+        return job1.type === job2.type ? 0 : job1.type === "fitting" ? -1 : 1;
+      });
+
+      tempJobs.sort((job1, job2) => {
+        return job1.type === job2.type ? 0 : job1.type === "job" ? -1 : 1;
       });
       tempJobs.sort((job1, job2) => {
         return job1.type === job2.type ? 0 : job1.type === "block_model" ? -1 : 1; 
@@ -76,7 +85,8 @@ export default function Day({ data }) {
       <p className="m-0 fs-7">{data.date.getDate()}</p>
       <ListGroup className="d-flex flex-column justify-content-start align-items-center w-100 h-100">
         {jobs.slice(0, jobs.length <= 4 ? 4 : 3).map((job, index) => {
-          const models = job.type === "block_model" ? job.Models :  job.DuplicatedModels
+          const models = job.Models
+       
        
        
           
@@ -84,13 +94,22 @@ export default function Day({ data }) {
             <ListGroupItem
               key={index}
               className={`fs-sm py-1 w-100 px-2 overflow-hidden text-break text-truncate word-break border-white fw-bold shadow rounded border-white ${
-                job.type === "fitting" && "bg-fitting"
-              } ${job.type === "job" && "bg-dark text-white"} ${job.type === "final_meeting" && "bg-final-meeting"} ${job.type === "rehearsal" && "bg-rehearsal"} ${job.type === "block_model" && "bg-block-model"}`}
+               ( job.type === "fitting" && job.status) && "bg-fitting"
+              } ${job.type === "job" && "bg-dark text-white"} ${job.type === "final_meeting" && "bg-final-meeting"} ${(job.type === "rehearsal" && job.status) && 'bg-rehearsal'} ${job.type === "block_model" && "bg-block-model"}`}
               style={{
-                background: job.type === "option" && `${job.User.colour}`,
+                background:(! job.status  && job.type !== "block_model")&& `${job.User.colour}`,
               }}
             >
-            {job.title === "Not available" ? "NA" : job.title}  <span className="fw-normal">{models.length > 0 && " - "}{models.map((model, index) => index === models.length -1 ?  model.first_name : model.first_name + ", ")}</span>
+           
+            {models.map((model, index) => {
+             
+              if(job.type === "job" || (job.type === "fitting" && job.status) || job.type === "block_model" || (job.type === "rehearsal" && job.status)){
+                return <span key={index} className="fw-bold">{model.first_name + (index !== models.length - 1 ? ", " : "")}</span>
+              }else{
+                return <span key={index} className="fw-normal">{model.first_name + (index !== models.length - 1 ?", " : "")}</span>
+              }
+            })}
+           
             </ListGroupItem>
           );
         })}

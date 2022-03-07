@@ -37,7 +37,9 @@ export const createJob = async (req: Request, res: Response) => {
 
 export const findAllJobs = async (req: Request, res: Response) => {
   try {
-    const defaultQueryOption: IQueryOption = {};
+    const defaultQueryOption: IQueryOption = {where: {title: {
+      [Op.notLike]: "Not available"
+    }}};
     const queryOption = getQueryOption(req, res, defaultQueryOption);
     const jobs = await JobService.findAllJobs(queryOption);
     res.status(200).send(jobs);
@@ -147,6 +149,9 @@ export const searchJobs = async (req: Request, res: Response) => {
         job_id: {
           [Op.in]: searchedJobId.map((job_id: any) => job_id.job_id),
         },
+        title: {
+          [Op.notLike]: "Not available"
+        }
       },
       include: [
         {
@@ -267,9 +272,12 @@ export const findCalenderJob = async (req: Request, res: Response) => {
         },
       ],
     });
+    
 
     const calenderJobs: any = {};
+    
     for (let job of jobs) {
+     
   
 
       for (let jobDate of job.JobDates) {
@@ -286,27 +294,31 @@ export const findCalenderJob = async (req: Request, res: Response) => {
           ] = [];
         }
 
+        const data = {
+          title: job.dataValues.title,
+            job_id: job.dataValues.job_id,
+            type:
+              jobDate.type === "fitting_date"
+                ? "fitting"
+                : jobDate.type === "final_meeting_date"
+                ? "final_meeting"
+                : jobDate.type === "rehearsal_date"
+                ? "rehearsal"
+                : jobDate.type === "block_model_date" ? "block_model" : job.status
+                ? "job"
+                : "option",
+            status: job.dataValues.status,
+            Models:    getDubplicatedModel(job.dataValues.Models.map((model: any) => model.dataValues), date),
+            User: job.dataValues.User,
+      
+            
+          }
+        
+
         calenderJobs[
           `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
-        ].push({
-        title: job.dataValues.title,
-          job_id: job.dataValues.job_id,
-          type:
-            jobDate.type === "fitting_date"
-              ? "fitting"
-              : jobDate.type === "final_meeting_date"
-              ? "final_meeting"
-              : jobDate.type === "rehearsal_date"
-              ? "rehearsal"
-              : jobDate.type === "block_model_date" ? "block_model" : job.dataValues.status
-              ? "job"
-              : "option",
-          status: job.dataValues.status,
-          Models: job.dataValues.Models,
-          User: job.dataValues.User,
-          DuplicatedModels: getDubplicatedModel(job.Models, date),
-          
-        });
+        ].push(data);
+      
       }
     }
 
@@ -325,6 +337,7 @@ const getDubplicatedModel = (
   const dupModel: Array<IModel> = Array();
  
   for (let model of models) {
+ 
     var numberOfDupJobs: number = 0;
 
     for (let modelJob of model.Jobs as Array<IJob>) {
@@ -341,11 +354,13 @@ const getDubplicatedModel = (
      
       if (numberOfDupJobs > 1) {
         
-        dupModel.push(model);
+        break
       
         break;
       }
     }
+
+    dupModel.push({...model,Jobs: undefined, duplicated: numberOfDupJobs > 1})
   }
   return dupModel;
 };

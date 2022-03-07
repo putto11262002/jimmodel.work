@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { Container, FormControl, ListGroup, Dropdown } from "react-bootstrap";
+import { Container, FormControl, ListGroup, Dropdown, ListGroupItem } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useSessionContext } from "../../context/unsecured/sessionContext";
 import useSearchModel from "../../hooks/useSearchModel";
 import ProfileImage from "../shared/image/ProfileImage";
-
+import Loader  from '../shared/Loader'
 export default function SearchModel() {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate()
@@ -22,8 +22,8 @@ export default function SearchModel() {
         type="text"
         placeholder="search model..."
       />
-      <ListGroup className="position-absolute w-100 shadow">
-        {searchResults.map((model, index) => {
+      <ListGroup className="position-absolute w-100 shadow" style={{zIndex: 10}}>
+        {loading ? <ListGroupItem><Loader/></ListGroupItem> : searchResults.map((model, index) => {
           return (
             <ListGroup.Item
             action

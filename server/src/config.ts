@@ -65,7 +65,7 @@ const getConfig = (): Config => {
         secret: String(process.env.SESSION_CESRET),
         saveUninitialized: true,
         cookie: {
-          maxAge: Number(HOUR) * 24,
+          maxAge: Number(HOUR) * 700,
         },
         resave: true,
       },

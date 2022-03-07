@@ -22,8 +22,8 @@ export default function OptionListGroupItem({data}) {
     <ListGroup.Item
    
    
-    className={`d-flex align-items-center ${(data.type === 'fitting' || data.type === 'rehearsal') && "bg-fitting"}`}
-    style={{ background: (data.type !== 'fitting' && data.type !== "rehearsal") && data.User.colour}}
+    className={`d-flex align-items-center`}
+    style={{ background:  data.User.colour}}
   >
     <p className={`p-0 my-0 d-inline text-dark fw-bold text-truncate`}>{data.title} <span className='fw-normal'> {data.Models.length > 0 && " - "} {data.Models.map((model, index) => index === data.Models.length -1 ?  model.first_name : model.first_name + ", ")}</span></p>
 

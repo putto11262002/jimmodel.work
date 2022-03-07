@@ -47,7 +47,7 @@ export default function UpdateOptionModal() {
 
      const validatedInputData = await validateOptionForm(inputData);
      try{
-       console.log(inputData)
+
      
       
       const updatedOption = await jobActions.updateOption(job_id, {...inputData, status: false, JobDates: inputData.JobDates.map(jobDate => {
@@ -75,7 +75,9 @@ export default function UpdateOptionModal() {
        try{
         
         
-        const updatedOption = await jobActions.updateOption(job_id, {...inputData, status: true});
+        const updatedOption = await jobActions.updateOption(job_id, {...inputData, status: true, JobDates: inputData.JobDates.map(jobDate => {
+          return {...jobDate, date: new Date(jobDate.date)}
+        })});
         setInputData(updatedOption);
         setLoading(false);
         updateOptionModalActions.setHide()
@@ -90,7 +92,7 @@ export default function UpdateOptionModal() {
 
   }
 
-  console.log(inputData)
+  
 
   function handleDateInputChange(newJobDates, type) {
     setInputData({

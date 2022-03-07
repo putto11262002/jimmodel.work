@@ -5,7 +5,7 @@ import { useAlertContext } from "../unsecured/alertContext";
 
 import { useSessionContext } from "../unsecured/sessionContext";
 const jobContext = createContext();
-const limit = 10;
+const limit = 50;
 export function useJobContext() {
   return useContext(jobContext);
 }

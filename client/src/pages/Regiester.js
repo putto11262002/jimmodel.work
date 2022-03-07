@@ -127,7 +127,7 @@ export default function Register() {
         return (
             <PageWrapper>
               <Form  className="row mt-5">
-                <h5 className="mt-5">Personal Details</h5>
+                <h5 className="">Personal Details</h5>
       
                 <Input
                   type="text"

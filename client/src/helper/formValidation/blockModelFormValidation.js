@@ -14,8 +14,8 @@ const blockModelSchema = object({
  
  
  
-  JobDates: array().test("shooting_date required", "Shooting date is required", (value) => {
-    return value.filter(jobDate => jobDate.type === "shooting_date").length >  0 
+  JobDates: array().test("block_model required", "Block model date is required", (value) => {
+    return value.filter(jobDate => jobDate.type === "block_model_date").length >  0 
 
   })
   

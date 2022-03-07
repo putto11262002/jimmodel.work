@@ -36,9 +36,9 @@ export default function CreateJobModal() {
    
     try{
       const createdJob = await jobActions.createJob(inputData);
-     
+      setInputData(createdJob);
       setError(false);
-      setLoading(true);
+      setLoading(false);
       createJobModalActions.setHide();
     }catch(err){
       console.error(err)
@@ -47,7 +47,7 @@ export default function CreateJobModal() {
 
     }
   }catch(err){
-    console.error(err)
+    setLoading(false)
     alertActions.setShow(err.errors[0], 'warning')
   }
     
@@ -64,6 +64,8 @@ export default function CreateJobModal() {
       ],
     });
   }
+
+  
 
   
 
@@ -104,7 +106,7 @@ export default function CreateJobModal() {
 <DateInput
             value={inputData.JobDates.filter(
               (jobDate) => jobDate.type === "fitting_date"
-            )}
+            ).map(jobDate => jobDate.date)}
             onChange={(newJobDates) =>
               handleDateInputChange(newJobDates, "fitting_date")
             }
@@ -116,7 +118,7 @@ export default function CreateJobModal() {
 <DateInput
             value={inputData.JobDates.filter(
               (jobDate) => jobDate.type === "rehearsal_date"
-            )}
+            ).map(jobDate => jobDate.date)}
             onChange={(newJobDates) =>
               handleDateInputChange(newJobDates, "rehearsal_date")
             }
@@ -126,7 +128,7 @@ export default function CreateJobModal() {
                 <DateInput
             value={inputData.JobDates.filter(
               (jobDate) => jobDate.type === "shooting_date"
-            )}
+            ).map(jobDate => jobDate.date)}
             onChange={(newJobDates) =>
               handleDateInputChange(newJobDates, "shooting_date")
             }
@@ -137,7 +139,7 @@ export default function CreateJobModal() {
 <DateInput
             value={inputData.JobDates.filter(
               (jobDate) => jobDate.type === "final_meeting_date"
-            )}
+            ).map(jobDate => jobDate.date)}
             onChange={(newJobDates) =>
               handleDateInputChange(newJobDates, "final_meeting_date")
             }
@@ -152,6 +154,7 @@ export default function CreateJobModal() {
             md="12"
             label="Talent booked"
             onChange={handleTalentInputChange}
+            value={inputData.Models}
             date={inputData.JobDates.filter(jobDate => jobDate.type === "shooting_date").length > 0 ? inputData.JobDates.filter(jobDate => jobDate.type === "shooting_date").map(jobDate => jobDate.date): null}
           />
 

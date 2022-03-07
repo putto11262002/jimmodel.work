@@ -44,5 +44,6 @@ export default interface IModel {
     emergency_contact_details?: string,
     emergency_contact_relationship?: string,
     Jobs?: Array<IJob>,
+    duplicated?: boolean,
     
 }
