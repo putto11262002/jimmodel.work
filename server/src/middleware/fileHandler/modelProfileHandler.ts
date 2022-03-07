@@ -58,12 +58,9 @@ export const deleteModelProfile = async (req: Request, res: Response, next: Next
   try{
     const rawModel = await modelService.findOneById(req.params.model_id);
     const model = await  rawModel.dataValues;
-    
+     
     for(let i = 1; i < 7; i++){
-      if(model[`profile_img_${i}`] !== null){
-        if(model[`profile_img_${i}`] === DEFAULT_MODEL_PROFILE_IMAGE) {
-          continue;
-        }
+      if(model[`profile_img_${i}`] !== null && model[`profile_img_${i}`] !== DEFAULT_MODEL_PROFILE_IMAGE){
        try{
          await fsPromises.unlink(model[`profile_img_${i}`]);
        }catch(err){
