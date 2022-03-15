@@ -16,7 +16,6 @@ export default function UpdateOptionModal() {
   const [error, setError] = useState(false);
   const {alertActions} = useAlertContext()
   const {jobActions} = useJobContext();
-  const {sessionActions} = useSessionContext()
   function handleInputChange(e) {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   }
@@ -40,6 +39,7 @@ export default function UpdateOptionModal() {
     }
 
   }, []);
+  console.log(inputData);
   
   async function handleSaveAsOption(){
    try{
@@ -47,6 +47,7 @@ export default function UpdateOptionModal() {
 
      const validatedInputData = await validateOptionForm(inputData);
      try{
+       console.log(inputData)
 
      
       

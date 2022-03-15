@@ -34,7 +34,8 @@ export default function Register() {
   const {  modelActions } = useModelContext();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const {sessionActions} = useSessionContext()
+  const {sessionActions} = useSessionContext();
+  const [submitted, setSubmitted] = useState(false)
  
   const [inputData, setInputData] = useState(initialInputData);
   const {alertActions} = useAlertContext();
@@ -90,14 +91,15 @@ export default function Register() {
         }
   
        const createdModel = await modelService.create(formData);
-       alertActions.setShow('Form has successfully been submited', 'success')
+       
+       setSubmitted(true)
        setInputData(initialInputData)
        setLoading(false)
       } catch (err) {
       
         console.error(err);
         alertActions.setShow(err.response.data, 'danger')
-        setError(true);
+
         setLoading(false);
       }
 
@@ -123,11 +125,23 @@ export default function Register() {
           return (
               <PageWrapper><Error/></PageWrapper>
           )
-      }else{
+      }else if (submitted){
+       return  <PageWrapper>
+             <h4 className="mt-5 text-primary text-center">Join Us</h4>
+                <h6 className="text-secondary text-center">J.I.M. modeling agency</h6>
+                <p className="text-success text-center">Successfully submitted. We will get back to you as soon as possible</p>
+          <h1 className="text-success text-center"><i className="bi bi-check-circle-fill"></i></h1>
+        </PageWrapper>
+
+
+      } else{
         return (
             <PageWrapper>
               <Form  className="row mt-5">
-                <h5 className="">Personal Details</h5>
+                <h4 className="text-primary text-center">Join Us</h4>
+                <h6 className="text-secondary text-center">J.I.M. modeling agency</h6>
+                <p className="fw-bold">All fields are required to be filled in english.</p>
+                <h6 className="mt-5">Personal Details</h6>
       
                 <Input
                   type="text"
@@ -282,7 +296,7 @@ export default function Register() {
                   onChange={handlePersonalDetailsInputChange}
                 />
       
-                <h5>Contact details</h5>
+                <h6>Contact details</h6>
       
                 <Input
                   type="text"
@@ -341,12 +355,12 @@ export default function Register() {
       <Input
                   type="text"
                   md="4"
-                  label="Imstagram"
+                  label="Instagram"
                   name="instagram"
                   value={inputData.instagram}
                   onChange={handlePersonalDetailsInputChange}
                 />
-                <h5>Address</h5>
+                <h6>Address</h6>
       
                 <Input
                   md="12"
@@ -384,7 +398,7 @@ export default function Register() {
                   value={inputData.country}
                 />
       
-                <h5>Emergency contact</h5>
+                <h6>Emergency contact</h6>
       
                 <Input
                   md="4"
@@ -412,7 +426,7 @@ export default function Register() {
                   type="text"
                   value={inputData.emergency_contact_details}
                 />
-                <h5>Measurements</h5>
+                <h6>Measurements</h6>
       
       <Input
                   md="4"
@@ -485,7 +499,7 @@ export default function Register() {
                   value={inputData.Measurement.eye_colour}
                 />
                
-                <h5>Experience</h5>
+                <h6>Experience</h6>
                 <ExperienceForms
                   value={inputData.Experiences}
                   onChange={handleOnExperienceChange}

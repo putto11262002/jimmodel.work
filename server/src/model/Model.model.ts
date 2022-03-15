@@ -14,6 +14,10 @@ export default (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
       last_name: {
         type: dataTypes.STRING,
       },
+      nickname: {
+        type: dataTypes.STRING
+
+      },
       phone_number: {
         type: dataTypes.STRING,
       },

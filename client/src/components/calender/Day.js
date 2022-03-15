@@ -58,13 +58,13 @@ export default function Day({ data }) {
         return    job1createdDate.getTime() - job2createdDate.getTime()
       });
 
-      tempJobs.sort((job1, job2) => {
-        return job1.type === job2.type ? 0 : job1.type === "rehearsal" ? -1 : 1;
-      });
+      // tempJobs.sort((job1, job2) => {
+      //   return job1.type === job2.type ? 0 : job1.type === "rehearsal" ? -1 : 1;
+      // });
 
-      tempJobs.sort((job1, job2) => {
-        return job1.type === job2.type ? 0 : job1.type === "fitting" ? -1 : 1;
-      });
+      // tempJobs.sort((job1, job2) => {
+      //   return job1.type === job2.type ? 0 : job1.type === "fitting" ? -1 : 1;
+      // });
 
       tempJobs.sort((job1, job2) => {
         return job1.type === job2.type ? 0 : job1.type === "job" ? -1 : 1;
@@ -104,9 +104,9 @@ export default function Day({ data }) {
             {models.map((model, index) => {
              
               if(job.type === "job" || (job.type === "fitting" && job.status) || job.type === "block_model" || (job.type === "rehearsal" && job.status)){
-                return <span key={index} className="fw-bold">{model.first_name + (index !== models.length - 1 ? ", " : "")}</span>
+                return <span key={index} className="fw-bold">{(model.nickname === null ? model.first_name : model.nickname) + (index !== models.length - 1 ? ", " : "")}</span>
               }else{
-                return <span key={index} className="fw-normal">{model.first_name + (index !== models.length - 1 ?", " : "")}</span>
+                return <span key={index} className="fw-normal">{(model.nickname === null ? model.first_name : model.nickname) + (index !== models.length - 1 ?", " : "")}</span>
               }
             })}
            

@@ -12,7 +12,7 @@ export default function OptionCard({data}) {
   const {jobActions} = useJobContext()
   async function handleDeleteOption(){
     try{
-      const confirm = window.confirm("Are you sure you want to confirm this option?")
+      const confirm = window.confirm("Are you sure you want to delete this option?")
       if(!confirm) return;
       await jobActions.deleteOption(data.job_id);
     }catch(err){
@@ -23,7 +23,7 @@ export default function OptionCard({data}) {
 
   async function confirmOption(){
     try{
-      const confirm = window.confirm("Are you sure you want to confirm this option?")
+      const confirm = window.confirm("Are you sure you want to delete this option?")
      if(!confirm) return;
       const updatedOption = await jobActions.updateOption(data.job_id, {...data, status: true, JobDates: data.JobDates.map(jobDate => {
         return {...jobDate, date: new Date(jobDate.date)}
@@ -183,7 +183,7 @@ export default function OptionCard({data}) {
 
         
         </ListGroup>
-        <Button onClick={confirmOption} variant='light' className='mb-2 mt-1 mx-2 text-primary'>Confirm</Button>
+        {/* <Button onClick={confirmOption} variant='light' className='mb-2 mt-1 mx-2 text-primary'>Confirm</Button> */}
       </Card.Body>
 
   </Card>;

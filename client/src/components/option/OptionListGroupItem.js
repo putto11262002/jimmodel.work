@@ -3,7 +3,7 @@ import { useJobContext } from '../../context/secured/jobContext';
 import { useOptionModalContext } from '../../context/secured/optionModalContext';
 import { useUpdateOptionModalContext } from '../../context/secured/updateOptionModalContext';
 import { Dropdown, ListGroup } from 'react-bootstrap';
-
+import { datetimeFormatter } from '../../helper/Formatter';
 export default function OptionListGroupItem({data}) {
     const {updateOptionModalActions} = useUpdateOptionModalContext();
     const {optionModalActions} = useOptionModalContext();
@@ -11,6 +11,8 @@ export default function OptionListGroupItem({data}) {
 
     async function handleDeleteOption(job_id) {
         try {
+          const confirm = window.confirm("Are you sure you want to delete this option?")
+          if(!confirm) return;
           await jobActions.deleteOption(job_id);
         } catch (err) {
           console.error(err);
@@ -22,10 +24,12 @@ export default function OptionListGroupItem({data}) {
     <ListGroup.Item
    
    
-    className={`d-flex align-items-center`}
+    className={`d-flex align-items-center flex-wrap rounded`}
     style={{ background:  data.User.colour}}
   >
-    <p className={`p-0 my-0 d-inline text-dark fw-bold text-truncate`}>{data.title} <span className='fw-normal'> {data.Models.length > 0 && " - "} {data.Models.map((model, index) => index === data.Models.length -1 ?  model.first_name : model.first_name + ", ")}</span></p>
+
+<p className={`fs-xs w-100 m-0 `}>Booked at: {datetimeFormatter(data.createdAt)} by: {data.User.first_name + " " + data.User.last_name}</p>
+    <p className={`p-0 my-0 d-inline text-dark fw-bold text-truncate`} style={{width: '90%'}}>{data.title} <span className='fw-normal'> {data.Models.length > 0 && " - "}  {data.Models.map((model, index) => `${(model.nickname === null ? model.first_name : model.nickname)} ${(index === data.Models.length - 1 ?  "" : ",")}`)}</span></p>
 
    
       <Dropdown className="ms-auto d-inline mx-2" align="end">

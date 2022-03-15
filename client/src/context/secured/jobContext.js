@@ -109,7 +109,11 @@ export default  function JobContextProvider({ children }) {
 
   async function updateJob(job_id, job){
     try{
+      console.log(job)
+      
+
       job.JobDates = JSON.stringify(job.JobDates.map(jobDate => {
+        jobDate.date.setHours(12)
         return {...jobDate, date: new Date(jobDate.date.getTime() - (jobDate.date.getTimezoneOffset() * 60000))}
       }))
       
@@ -121,9 +125,7 @@ export default  function JobContextProvider({ children }) {
     
     
       job.Models = JSON.stringify(job.Models.map(model => model.model_id));
-      job.fitting_date = new Date(job.fitting_date);
-      job.shooting_start = new Date(job.shooting_start);
-      job.shooting_end = new Date(job.shooting_end);
+      console.log(job)
       const res = await jobService.updateJob(job_id, job)
       const updatedJob = await res.data;
     
@@ -187,6 +189,7 @@ export default  function JobContextProvider({ children }) {
   async function createJob(job) {
     try {
       job.JobDates = JSON.stringify(job.JobDates.map(jobDate => {
+        jobDate.date.setHours(12)
         return {...jobDate, date: new Date(jobDate.date.getTime() - (jobDate.date.getTimezoneOffset() * 60000))}
       }))
       job.booked_by = user.user_id;
@@ -218,6 +221,7 @@ export default  function JobContextProvider({ children }) {
      
 
       option.JobDates = JSON.stringify(option.JobDates.map(jobDate => {
+        jobDate.date.setHours(12)
         return {...jobDate, date: new Date(jobDate.date.getTime() - (jobDate.date.getTimezoneOffset() * 60000))}
       }))
       option.booked_by = user.user_id

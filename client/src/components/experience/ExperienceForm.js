@@ -34,13 +34,12 @@ function ExperienceForm({ data, onDelete, index, onChange, onRemove }) {
         <Card.Body>
           <Form className="row justify-content-center g-2">
             <Input
-              type="date"
+              type="text"
               md="6"
               label="Year"
               name="year"
               value={
-               
-                   htmlDateFormatter(data.year)
+               data.year
               }
               onChange={handleOnInputChange}
             />
@@ -52,13 +51,15 @@ function ExperienceForm({ data, onDelete, index, onChange, onRemove }) {
               value={data.media}
               onChange={handleOnInputChange}
             />
-            <SelectCountry
-              label="Country"
+             <Input
+              type="text"
               md="6"
+              label="Country"
               name="country"
               value={data.country}
               onChange={handleOnInputChange}
             />
+           
             <Input
               type="text"
               md="6"

@@ -18,6 +18,8 @@ export default function RequestedModelCard({ data }) {
   }
 
   async function handleDeleteModel(){
+    const confirm = window.confirm("Are you sure you want to delete this model?")
+    if(!confirm) return;
     try{
       await modelActions.deleteModel(data.model_id);
     }catch(err){
@@ -28,7 +30,7 @@ export default function RequestedModelCard({ data }) {
   return (
     <Card>
       <Card.Header className="d-flex justify-content-between bg-white align-items-center">
-        <h6 className="m-0 mx-2">{data.first_name + " " + data.last_name}</h6>
+        <h6 className="m-0 mx-2">{data.first_name + " " + data.last_name} {data.nickname && " (" + data.nickname + ")"}</h6>
         
         <Dropdown className=" d-inline mx-2" align="end">
           <Dropdown.Toggle

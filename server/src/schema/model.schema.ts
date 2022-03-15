@@ -2,7 +2,7 @@ import { object, string, number, date, boolean, bool, array } from "yup";
 const ExperienceSchema = object({
   experience_id: string(),
   model_id: string(),
-  year: date(),
+  year: string(),
   country: string(),
   product: string(),
   media: string(),
@@ -44,6 +44,7 @@ export const createModelSchema = object({
     model_id: string(),
     first_name: string().required("First name is a required field."),
     last_name: string().required("Last name is a required field."),
+    nickname: string(),
     phone_number: string(),
     email: string()
       .email("Email must be a valid email."),

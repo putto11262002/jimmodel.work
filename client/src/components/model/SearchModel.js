@@ -37,7 +37,7 @@ export default function SearchModel() {
                 height={1.5}
               />
               <p className="p-0 my-0 d-inline ms-2">
-                {model.first_name + " " + model.last_name}
+                {model.first_name + " " + model.last_name}  {model.nickname && " (" + model.nickname + ")"}
               </p>
         
 

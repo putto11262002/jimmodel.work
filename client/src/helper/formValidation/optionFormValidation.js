@@ -1,7 +1,7 @@
 import { object, string, date, array, boolean, test } from "yup";
 
 const optionSchema = object({
-  client: string(),
+ 
   
   title: string().required("Title cannot be empty."),
   Models: array().test(
@@ -11,11 +11,8 @@ const optionSchema = object({
       return value.length > 0;
     }
   ),
-  media_released: string(),
-
-  territories_released: string(),
- 
-  working_hour: string(),
+  
+  
   JobDates: array().test("shooting_date required", "Shooting date is required", (value) => {
     return value.filter(jobDate => jobDate.type === "shooting_date").length >  0 
 

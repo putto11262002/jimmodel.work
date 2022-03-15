@@ -157,7 +157,7 @@ function SearchResults({ searchResults, onSelect, loading }) {
                 e.preventDefault();
                 onSelect(model);
               }}>
-                {model.first_name + " " + model.last_name}
+                {model.first_name + " " + model.last_name} {model.nickname !== null && "(" + model.nickname  + ")"}
               </p>
             { model.JobsOnTargetDate !== undefined && (model.JobsOnTargetDate.length > 0 &&  <ListGroup className="w-100 mt-3 mb-2">
                 {model.JobsOnTargetDate.map((job, index) => {

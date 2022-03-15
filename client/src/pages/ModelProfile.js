@@ -106,8 +106,9 @@ export default function ModelProfile() {
               >
                 <i className="bi bi-file-earmark-arrow-down text-primary"></i>
               </Button>
-              {(user.role === "admin" || user.role === "root") &&
-                !model.approved && (
+
+      
+              {model.Jobs.length < 1 && (
                   <Button
                     onClick={handleDeleteModel}
                     variant="light"
@@ -514,7 +515,7 @@ export default function ModelProfile() {
                   <Accordion.Header>Jobs</Accordion.Header>
                   <Accordion.Body>
                     <ListGroup>
-                       { model.Jobs.map((job, index) => {
+                       { model.Jobs.filter(job => job !== "Not available").map((job, index) => {
                         if (job.status) {
                           return <JobListGroupItem key={index} data={job} />;
                         } else {

@@ -4,6 +4,7 @@ export default interface IModel {
   model_id?: string,
     first_name?: string,
     last_name?: string,
+    nickname?: string,
     phone_number?: string,
     email?: string,
     line_id?: string,

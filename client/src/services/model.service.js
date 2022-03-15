@@ -6,7 +6,7 @@ class ModelService {
 
     return http.get("model", {
      
-      params: { limit, offset, approved, include: includeDefault },
+      params: { limit, offset, approved, include: includeDefault,  },
       cancelToken: cancelToken,
     });
   }

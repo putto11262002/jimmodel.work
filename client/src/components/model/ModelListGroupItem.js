@@ -5,6 +5,7 @@ import docService from '../../services/doc.service';
 
 import ProfileImage from '../shared/image/ProfileImage';
 import { useModelContext } from '../../context/secured/modelContext';
+import { dateFormatter } from '../../helper/Formatter';
 export default function ModelListGroupItem({data}) {
  
   
@@ -50,7 +51,7 @@ export default function ModelListGroupItem({data}) {
                         }
                       />
                       <span className="mx-3 my-0">
-                        {data.first_name + " " + data.last_name}
+                        {data.first_name + " " + data.last_name}  {data.nickname && " (" + data.nickname + ")"}
                       </span>
 
     
@@ -82,10 +83,12 @@ export default function ModelListGroupItem({data}) {
           >
             Model profile
           </Dropdown.Item>}
+
+       
           
         </Dropdown.Menu>
       </Dropdown>
-   
+
   </ListGroup.Item>
   )
 }

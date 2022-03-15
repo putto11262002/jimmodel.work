@@ -1,7 +1,7 @@
 export default interface IExperience {
   experience_id: string;
     model_id?: string;
-    year?: Date;
+    year?: string;
     product?: string;
     country?: string;
     media?: string;

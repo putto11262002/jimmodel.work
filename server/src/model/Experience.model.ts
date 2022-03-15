@@ -14,7 +14,7 @@ export default (sequelize: Sequelize, dataTypes: typeof DataTypes ) => {
             
         },
         year: {
-            type: dataTypes.DATE
+            type: dataTypes.STRING
         },
         media: {
             type: dataTypes.STRING

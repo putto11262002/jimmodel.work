@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Model, Op } from "sequelize";
+import {  Op } from "sequelize";
 import ModelInstance from "../interface/sequlize/model.interface";
 import IQueryOption from "../interface/QueryOption.interface";
 import modelService from "../service/model/index.service";
@@ -53,7 +53,9 @@ export const createModel = async (req: Request, res: Response) => {
 
 export const findModels = async (req: Request, res: Response) => {
   try {
-    const defaultQueryOption: IQueryOption = {};
+    const defaultQueryOption: IQueryOption = {
+      order: [['first_name'], ['last_name']]
+    };
     const queryOption: IQueryOption = getQueryOption(
       req,
       res,
@@ -150,8 +152,8 @@ export const deleteModelById = async (req: Request, res: Response) => {
     if (!rawModel) {
       res.status(404).send("Model does not exist.");
     }
-    if (rawModel.dataValues.approved) {
-      return res.status(404).send("Cannot delete an approved model.");
+    if (rawModel.dataValues.Jobs.filter((job: any) => job.dataValues.title !== "Not available").length > 0 ) {
+      return res.status(404).send("Cannot delete model bacuause it was linked to job.");
     }
     const model = await rawModel.dataValues;
     model.Experiences.forEach(async (experience: IExperience) => {

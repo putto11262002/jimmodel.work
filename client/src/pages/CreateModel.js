@@ -97,7 +97,7 @@ export default function CreateModel() {
 
           <Input
             type="text"
-            md="6"
+            md="4"
             label="First name"
             name="first_name"
             value={inputData.first_name}
@@ -105,10 +105,18 @@ export default function CreateModel() {
           />
           <Input
             type="text"
-            md="6"
+            md="4"
             label="Last name"
             name="last_name"
             value={inputData.last_name}
+            onChange={handlePersonalDetailsInputChange}
+          />
+          <Input
+            type="text"
+            md="4"
+            label="Card name"
+            name="nickname"
+            value={inputData.nickname}
             onChange={handlePersonalDetailsInputChange}
           />
           <Input
@@ -319,7 +327,7 @@ export default function CreateModel() {
 <Input
             type="text"
             md="4"
-            label="Imstagram"
+            label="Instagram"
             name="instagram"
             value={inputData.instagram}
             onChange={handlePersonalDetailsInputChange}

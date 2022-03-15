@@ -58,12 +58,18 @@ export default function ModelContextProvider({ children }) {
       setError(false);
    
       const res = await modelService.getAll(100, 0, false, source.token);
-      const fetchedRequestedModels = await res.data;
+      const fetchedRequestedModels = await res.data
       
       setRequestedModels((prevRequestedModels) => [
         ...prevRequestedModels,
         ...fetchedRequestedModels,
-      ]);
+      ].sort((model1, model2) => {
+      
+        const model1createdDate = new Date(model1.createdAt);
+        const model2createdDate = new Date(model2.createdAt);
+  
+        return    model2createdDate.getTime() - model1createdDate.getTime()
+      }));
       setLoading(false);
     } catch (err) {
     

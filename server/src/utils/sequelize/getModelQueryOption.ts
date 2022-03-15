@@ -40,7 +40,7 @@ export default (
       }
       orders[key] = splitedOrder;
     }
-    (orders);
+   
     QueryOptions.order = orders;
   }
 

@@ -40,7 +40,7 @@ export default function JobCard({ data }) {
 
   async function handleDeleteJob(){
     try{
-      const confirm = window.confirm("Are you sure you want to confirm this option?")
+      const confirm = window.confirm("Are you sure you want to delete this job?")
       if(!confirm) return;
       await jobActions.deleteJob(data.job_id);
     }catch(err){
