@@ -49,6 +49,8 @@ export default function Day({ data }) {
         }
       }
       }
+
+ 
      
       tempJobs.sort((job1, job2) => {
       
@@ -66,6 +68,9 @@ export default function Day({ data }) {
       //   return job1.type === job2.type ? 0 : job1.type === "fitting" ? -1 : 1;
       // });
 
+      tempJobs.sort((job1, job2) => {
+        return job1.status === job2.status ? 0 : job1.status ? -1 : 1;
+      });
       tempJobs.sort((job1, job2) => {
         return job1.type === job2.type ? 0 : job1.type === "job" ? -1 : 1;
       });

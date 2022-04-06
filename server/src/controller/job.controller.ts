@@ -346,7 +346,7 @@ const getDubplicatedModel = (
 
         if (
           date.getDate() === targetDate.getDate() &&
-          date.getMonth() === date.getMonth()
+          date.getMonth() === targetDate.getMonth()
         ) {
           numberOfDupJobs = numberOfDupJobs + 1;
         }
